@@ -1,6 +1,7 @@
 import 'package:donation_app/screens/init_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../components/custom_surfix_icon.dart';
 import '../../../components/form_error.dart';
@@ -14,6 +15,9 @@ class SignFormController extends GetxController {
   final RxString password = ''.obs;
   final RxBool remember = false.obs;
   final RxList<String> errors = <String>[].obs;
+  final RxBool isLoading = false.obs;
+
+  final supabase = Supabase.instance.client;
 
   void addError(String? error) {
     if (error != null && !errors.contains(error)) {
@@ -56,6 +60,7 @@ class SignFormController extends GetxController {
     if (emailValidatorRegExp.hasMatch(value)) {
       removeError(kInvalidEmailError);
     }
+    email.value = value;
   }
 
   void onPasswordChanged(String value) {
@@ -65,13 +70,53 @@ class SignFormController extends GetxController {
     if (value.length >= 8) {
       removeError(kShortPassError);
     }
+    password.value = value;
   }
 
-  void submitForm() {
+  Future<void> submitForm() async {
+    // Clear previous errors
+    errors.clear();
+
+    // Validate form
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       KeyboardUtil.hideKeyboard(Get.context!);
-      Get.toNamed(InitScreen.routeName);
+
+      // Start loading
+      isLoading.value = true;
+
+      try {
+        // Attempt Supabase sign-in
+        final response = await supabase.auth.signInWithPassword(
+          email: email.value.trim(),
+          password: password.value.trim(),
+        );
+
+        // Navigate to initial screen on successful login
+        Get.toNamed(InitScreen.routeName);
+      } on AuthException catch (e) {
+        // Handle specific Supabase authentication errors
+        String errorMessage = 'Login failed';
+        switch (e.message) {
+          case 'Invalid login credentials':
+            errorMessage = 'Email atau password salah';
+            break;
+          case 'Email not confirmed':
+            errorMessage = 'Email belum dikonfirmasi';
+            break;
+          default:
+            errorMessage = e.message;
+        }
+
+        // Add the error to be displayed
+        addError(errorMessage);
+      } catch (e) {
+        // Catch any other unexpected errors
+        addError('Terjadi kesalahan. Coba lagi.');
+      } finally {
+        // Stop loading
+        isLoading.value = false;
+      }
     }
   }
 
@@ -139,10 +184,13 @@ class SignForm extends StatelessWidget {
           ),
           Obx(() => FormError(errors: controller.errors.toList())),
           const SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: controller.submitForm,
-            child: const Text("Masuk"),
-          ),
+          Obx(() => ElevatedButton(
+                onPressed:
+                    controller.isLoading.value ? null : controller.submitForm,
+                child: controller.isLoading.value
+                    ? const CircularProgressIndicator()
+                    : const Text("Masuk"),
+              )),
         ],
       ),
     );
