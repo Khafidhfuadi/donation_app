@@ -1,5 +1,5 @@
+import 'package:donation_app/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});
@@ -7,25 +7,56 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> categories = [
-      {"icon": "assets/icons/Flash Icon.svg", "text": "Flash Deal"},
-      {"icon": "assets/icons/Bill Icon.svg", "text": "Bill"},
-      {"icon": "assets/icons/Game Icon.svg", "text": "Game"},
-      {"icon": "assets/icons/Gift Icon.svg", "text": "Daily Gift"},
-      {"icon": "assets/icons/Discover.svg", "text": "More"},
+      {"icon": "assets/images/disaster.png", "text": "Bencana Alam"},
+      {"icon": "assets/images/edu.png", "text": "Pendidikan"},
+      {"icon": "assets/images/health.png", "text": "Kesehatan"},
+      {"icon": "assets/images/rice.png", "text": "Pangan"},
+      {"icon": "assets/images/road.png", "text": "Infrastruktur"},
     ];
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
-          categories.length,
-          (index) => CategoryCard(
-            icon: categories[index]["icon"],
-            text: categories[index]["text"],
-            press: () {},
+      child: Column(
+        children: [
+          //categories title
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Kategori",
+                style: TextStyle(
+                  color: kTextColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "Lihat Semua",
+                style: TextStyle(
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
-        ),
+          const SizedBox(height: 12),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(
+                categories.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: CategoryCard(
+                    icon: categories[index]["icon"],
+                    text: categories[index]["text"],
+                    press: () {},
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -46,21 +77,32 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: press,
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            height: 56,
-            width: 56,
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFECDF),
-              borderRadius: BorderRadius.circular(10),
+      child: SizedBox(
+        width: 85,
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              height: 56,
+              width: 56,
+              decoration: BoxDecoration(
+                color: const Color(0xFF79D7BE),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Image.asset(
+                icon,
+                width: 24,
+              ),
             ),
-            child: SvgPicture.asset(icon),
-          ),
-          const SizedBox(height: 4),
-          Text(text, textAlign: TextAlign.center)
-        ],
+            const SizedBox(height: 4),
+            Text(text,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.center)
+          ],
+        ),
       ),
     );
   }

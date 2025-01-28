@@ -53,7 +53,7 @@ class DonationInfoCard extends GetView<AuthService> {
                   'Total Donasimu',
                 ),
                 _buildInfoTile(
-                  'assets/images/solidarity.png',
+                  'assets/images/charity.png',
                   '${userStats?.totalDonationsMade ?? 0}x',
                   'Berdonasi',
                 ),
