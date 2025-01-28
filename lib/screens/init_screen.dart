@@ -51,16 +51,16 @@ class _InitScreenState extends State<InitScreen> {
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              "assets/icons/donate.svg",
-              width: 24,
+              "assets/icons/home.svg",
+              width: 28,
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,
               ),
             ),
             activeIcon: SvgPicture.asset(
-              "assets/icons/donate.svg",
-              width: 24,
+              "assets/icons/home.svg",
+              width: 28,
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,
                 BlendMode.srcIn,

@@ -1,3 +1,4 @@
+import 'package:donation_app/screens/home/components/highlighted_donation_card.dart';
 import 'package:flutter/material.dart';
 
 import 'components/categories.dart';
@@ -20,7 +21,8 @@ class HomeScreen extends StatelessWidget {
               const HomeHeader(),
               DonationInfoCard(),
               const Categories(),
-              const SpecialOffers(),
+              const HighlightedDonation(),
+              // const SpecialOffers(),
               // SizedBox(height: 20),
               // PopularProducts(),
               const SizedBox(height: 20),

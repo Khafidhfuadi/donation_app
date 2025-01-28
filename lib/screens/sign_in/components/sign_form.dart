@@ -86,8 +86,7 @@ class SignFormController extends GetxController {
       isLoading.value = true;
 
       try {
-        // Attempt Supabase sign-in
-        final response = await supabase.auth.signInWithPassword(
+        await supabase.auth.signInWithPassword(
           email: email.value.trim(),
           password: password.value.trim(),
         );
