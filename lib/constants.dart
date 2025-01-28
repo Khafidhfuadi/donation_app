@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFFFF7643);
-const kPrimaryLightColor = Color(0xFFFFECDF);
+const kPrimaryColor = Color(0xFF2E5077);
+const kPrimaryLightColor = Color(0xFF4DA1A9);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
-  colors: [Color(0xFFFFA53E), Color(0xFFFF7643)],
+  colors: [Color.fromARGB(255, 88, 130, 177), Color(0xFF2E5077)],
 );
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Colors.black;
@@ -24,14 +24,14 @@ const defaultDuration = Duration(milliseconds: 250);
 // Form Error
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-const String kEmailNullError = "Please Enter your email";
-const String kInvalidEmailError = "Please Enter Valid Email";
-const String kPassNullError = "Please Enter your password";
-const String kShortPassError = "Password is too short";
-const String kMatchPassError = "Passwords don't match";
-const String kNamelNullError = "Please Enter your name";
-const String kPhoneNumberNullError = "Please Enter your phone number";
-const String kAddressNullError = "Please Enter your address";
+const String kEmailNullError = "Silakan masukkan email Anda";
+const String kInvalidEmailError = "Silakan masukkan email yang valid";
+const String kPassNullError = "Silakan masukkan kata sandi Anda";
+const String kShortPassError = "Kata sandi terlalu pendek";
+const String kMatchPassError = "Kata sandi tidak cocok";
+const String kNamelNullError = "Silakan masukkan nama Anda";
+const String kPhoneNumberNullError = "Silakan masukkan nomor telepon Anda";
+const String kAddressNullError = "Silakan masukkan alamat Anda";
 
 final otpInputDecoration = InputDecoration(
   contentPadding: const EdgeInsets.symmetric(vertical: 16),

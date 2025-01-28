@@ -1,3 +1,4 @@
+import 'package:donation_app/services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -7,6 +8,7 @@ class ProfileController extends GetxController {
   final RxString userAvatar =
       'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/netron-e-com-mobile-6rhojr/assets/l260dcr57pr2/user-default.png'
           .obs;
+  final AuthService authService = Get.find();
 
   void navigateToEditProfile() {
     Get.toNamed('/profile-edit');
@@ -39,8 +41,7 @@ class ProfileController extends GetxController {
       textCancel: 'Cancel',
       textConfirm: 'Logout',
       onConfirm: () {
-        // Implement logout logic
-        Get.offAllNamed('/login');
+        authService.logout();
       },
       onCancel: () {},
     );

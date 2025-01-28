@@ -1,6 +1,9 @@
 import 'package:donation_app/screens/init_screen.dart';
+import 'package:donation_app/screens/sign_in/sign_in_screen.dart';
+import 'package:donation_app/services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../components/custom_surfix_icon.dart';
@@ -46,9 +49,6 @@ class SignFormController extends GetxController {
     if (value == null || value.isEmpty) {
       addError(kPassNullError);
       return "";
-    } else if (value.length < 8) {
-      addError(kShortPassError);
-      return "";
     }
     return null;
   }
@@ -92,6 +92,17 @@ class SignFormController extends GetxController {
           password: password.value.trim(),
         );
 
+        // Explicitly set login state in AuthService
+        final authService = Get.find<AuthService>();
+        authService.isLoggedIn.value = true;
+
+        if (remember.value) {
+          await _saveLoginState();
+        }
+
+        authService.fetchUserInfo();
+        authService.fetchUserStats();
+
         // Navigate to initial screen on successful login
         Get.toNamed(InitScreen.routeName);
       } on AuthException catch (e) {
@@ -118,6 +129,21 @@ class SignFormController extends GetxController {
         isLoading.value = false;
       }
     }
+  }
+
+  Future<void> _saveLoginState() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+    await prefs.setString('userEmail', email.value);
+  }
+
+  // Add a logout method
+  Future<void> logout() async {
+    await supabase.auth.signOut();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('isLoggedIn');
+    await prefs.remove('userEmail');
+    Get.offAllNamed(SignInScreen.routeName);
   }
 
   void navigateToForgotPassword() {

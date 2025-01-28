@@ -1,4 +1,5 @@
 import 'package:donation_app/constants.dart';
+import 'package:donation_app/screens/home/home_screen.dart';
 import 'package:donation_app/screens/profile_page/profile_page_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,9 +27,7 @@ class _InitScreenState extends State<InitScreen> {
   final pages = [
     // const HomeScreen(),
     // const FavoriteScreen(),
-    const Center(
-      child: Text("Home"),
-    ),
+    const HomeScreen(),
     const Center(
       child: Text("Fav"),
     ),
@@ -52,14 +51,16 @@ class _InitScreenState extends State<InitScreen> {
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
-              "assets/icons/Shop Icon.svg",
+              "assets/icons/donate.svg",
+              width: 24,
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,
               ),
             ),
             activeIcon: SvgPicture.asset(
-              "assets/icons/Shop Icon.svg",
+              "assets/icons/donate.svg",
+              width: 24,
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,
                 BlendMode.srcIn,

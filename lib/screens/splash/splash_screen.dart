@@ -1,3 +1,5 @@
+import 'package:donation_app/screens/init_screen.dart';
+import 'package:donation_app/services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,6 +47,15 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SplashController controller = Get.put(SplashController());
+
+    final authService = Get.find<AuthService>();
+
+    // Use ever to react to login status changes
+    ever(authService.isLoggedIn, (isLoggedIn) {
+      if (isLoggedIn) {
+        Get.offAllNamed(InitScreen.routeName);
+      }
+    });
 
     return Scaffold(
       body: SafeArea(
