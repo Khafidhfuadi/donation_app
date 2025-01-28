@@ -1,4 +1,5 @@
-import 'package:donation_app/constants.dart';
+import 'package:donation_app/screens/home/components/section_title.dart';
+import 'package:donation_app/screens/profile_page/profile_page_screen.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatelessWidget {
@@ -13,34 +14,23 @@ class Categories extends StatelessWidget {
       {"icon": "assets/images/rice.png", "text": "Pangan"},
       {"icon": "assets/images/road.png", "text": "Infrastruktur"},
     ];
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          //categories title
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Kategori",
-                style: TextStyle(
-                  color: kTextColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                "Lihat Semua",
-                style: TextStyle(
-                  color: kPrimaryColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: SectionTitle(
+              title: "Kategori",
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePageScreen()),
+                );
+              }),
+        ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 20.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(
@@ -56,8 +46,8 @@ class Categories extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

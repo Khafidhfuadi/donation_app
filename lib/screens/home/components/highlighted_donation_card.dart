@@ -1,4 +1,5 @@
 import 'package:donation_app/constants.dart';
+import 'package:donation_app/screens/home/components/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -11,6 +12,7 @@ class HighlightedDonation extends StatelessWidget {
       {
         "thumbnail_donasi":
             "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_kat": "assets/images/disaster.png",
         "nama_donasi": "Banjir Bandung",
         "kategori_donasi": "Bencana Alam",
         "penggalang_dana": "Yayasan Bencana Alam",
@@ -20,8 +22,9 @@ class HighlightedDonation extends StatelessWidget {
       {
         "thumbnail_donasi":
             "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_kat": "assets/images/edu.png",
         "nama_donasi": "Gempa Lombok",
-        "kategori_donasi": "Bencana Alam",
+        "kategori_donasi": "Pendidikan",
         "penggalang_dana": "Yayasan Peduli Lombok",
         "jumlah_dana_terkumpul": "Rp 2.500.000",
         "durasi_donasi": "10 hari lagi",
@@ -29,8 +32,9 @@ class HighlightedDonation extends StatelessWidget {
       {
         "thumbnail_donasi":
             "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_kat": "assets/images/health.png",
         "nama_donasi": "Kebakaran Hutan",
-        "kategori_donasi": "Bencana Alam",
+        "kategori_donasi": "Kesehatan",
         "penggalang_dana": "Yayasan Alam Lestari",
         "jumlah_dana_terkumpul": "Rp 3.000.000",
         "durasi_donasi": "5 hari lagi",
@@ -42,20 +46,11 @@ class HighlightedDonation extends StatelessWidget {
       child: Column(
         children: [
           //categories title
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Bantu Sesama, Pulih Bersama",
-                style: TextStyle(
-                  color: kTextColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
+          SectionTitle(
+              title: "Bantu Sesama, Pulih Bersama",
+              press: () {
+                null;
+              }),
           Column(
             children: List.generate(
               datas.length,
@@ -68,6 +63,7 @@ class HighlightedDonation extends StatelessWidget {
                   penggalangDana: datas[index]["penggalang_dana"],
                   jumlahDanaTerkumpul: datas[index]["jumlah_dana_terkumpul"],
                   durasiDonasi: datas[index]["durasi_donasi"],
+                  thumbnailKat: datas[index]["thumbnail_kat"],
                   press: () {},
                 ),
               ),
@@ -88,6 +84,7 @@ class HighlitedDonationCard extends StatelessWidget {
     required this.penggalangDana,
     required this.jumlahDanaTerkumpul,
     required this.durasiDonasi,
+    required this.thumbnailKat,
     required this.press,
   });
 
@@ -96,7 +93,8 @@ class HighlitedDonationCard extends StatelessWidget {
       kategoriDonasi,
       penggalangDana,
       jumlahDanaTerkumpul,
-      durasiDonasi;
+      durasiDonasi,
+      thumbnailKat;
   final GestureTapCallback press;
 
   @override
@@ -136,12 +134,22 @@ class HighlitedDonationCard extends StatelessWidget {
                       color: const Color.fromRGBO(77, 161, 169, 0.5),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Text(
-                      kategoriDonasi,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
+                    child: Row(
+                      children: [
+                        Text(
+                          kategoriDonasi,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Image.asset(
+                          thumbnailKat,
+                          width: 16,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
                   ),
                 ),

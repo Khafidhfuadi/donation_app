@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'components/categories.dart';
 import 'components/donation_info_card.dart';
 import 'components/home_header.dart';
-import 'components/special_offers.dart';
 
 class HomeScreen extends StatelessWidget {
   static String routeName = "/home";
