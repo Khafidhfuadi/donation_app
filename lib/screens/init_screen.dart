@@ -45,9 +45,11 @@ class _InitScreenState extends State<InitScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: updateCurrentIndex,
         currentIndex: currentSelectedIndex,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        // showSelectedLabels: false,
+        // showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
+        selectedLabelStyle: const TextStyle(
+            fontSize: 12, fontWeight: FontWeight.w600, color: kPrimaryColor),
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
@@ -69,24 +71,20 @@ class _InitScreenState extends State<InitScreen> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              "assets/icons/Heart Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                inActiveIconColor,
-                BlendMode.srcIn,
-              ),
+            icon: Image.asset(
+              "assets/images/gift.png",
+              width: 28,
+              color: inActiveIconColor, // Use `color` instead of `colorFilter`
             ),
-            activeIcon: SvgPicture.asset(
-              "assets/icons/Heart Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                kPrimaryColor,
-                BlendMode.srcIn,
-              ),
+            activeIcon: Image.asset(
+              "assets/images/gift.gif", // Use gif for active icon
+              width: 28,
             ),
             label: "Fav",
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
+              width: 28,
               "assets/icons/Chat bubble Icon.svg",
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
@@ -94,6 +92,7 @@ class _InitScreenState extends State<InitScreen> {
               ),
             ),
             activeIcon: SvgPicture.asset(
+              width: 28,
               "assets/icons/Chat bubble Icon.svg",
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,
@@ -104,6 +103,7 @@ class _InitScreenState extends State<InitScreen> {
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
+              width: 28,
               "assets/icons/User Icon.svg",
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
@@ -111,6 +111,7 @@ class _InitScreenState extends State<InitScreen> {
               ),
             ),
             activeIcon: SvgPicture.asset(
+              width: 28,
               "assets/icons/User Icon.svg",
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,

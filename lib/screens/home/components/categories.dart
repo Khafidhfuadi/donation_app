@@ -86,7 +86,14 @@ class CategoryCard extends StatelessWidget {
               height: 56,
               width: 56,
               decoration: BoxDecoration(
-                color: const Color(0xFF79D7BE),
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF79D7BE),
+                    Color.fromARGB(255, 225, 250, 226)
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Image.asset(

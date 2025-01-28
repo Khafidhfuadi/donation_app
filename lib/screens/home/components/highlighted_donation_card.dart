@@ -17,8 +17,6 @@ class HighlightedDonation extends StatelessWidget {
         "jumlah_dana_terkumpul": "Rp 1.000.000",
         "durasi_donasi": "7 hari lagi",
       },
-    ];
-    datas.addAll([
       {
         "thumbnail_donasi":
             "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
@@ -37,16 +35,8 @@ class HighlightedDonation extends StatelessWidget {
         "jumlah_dana_terkumpul": "Rp 3.000.000",
         "durasi_donasi": "5 hari lagi",
       },
-      {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
-        "nama_donasi": "Banjir Jakarta",
-        "kategori_donasi": "Bencana Alam",
-        "penggalang_dana": "Yayasan Jakarta Peduli",
-        "jumlah_dana_terkumpul": "Rp 1.500.000",
-        "durasi_donasi": "3 hari lagi",
-      },
-    ]);
+    ];
+
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
