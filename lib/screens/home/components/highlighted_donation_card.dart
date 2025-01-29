@@ -11,8 +11,7 @@ class HighlightedDonation extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> datas = [
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/disaster.png",
         "nama_donasi": "Banjir Bandung",
         "kategori_donasi": "Bencana Alam",
@@ -21,8 +20,7 @@ class HighlightedDonation extends StatelessWidget {
         "durasi_donasi": "7 hari",
       },
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/edu.png",
         "nama_donasi": "Gempa Lombok",
         "kategori_donasi": "Pendidikan",
@@ -31,8 +29,7 @@ class HighlightedDonation extends StatelessWidget {
         "durasi_donasi": "10 hari",
       },
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/health.png",
         "nama_donasi": "Kebakaran Hutan",
         "kategori_donasi": "Kesehatan",
@@ -119,7 +116,7 @@ class HighlitedDonationCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.network(
+                  child: Image.asset(
                     thumbnailDonasi,
                     width: double.infinity,
                     height: 200,

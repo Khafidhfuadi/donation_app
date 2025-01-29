@@ -101,11 +101,11 @@ class _InitScreenState extends State<InitScreen> {
           BottomNavigationBarItem(
             icon: Image.asset(
                 width: 28,
-                "assets/images/person.png",
+                "assets/images/person-2.png",
                 color: inActiveIconColor),
             activeIcon: Image.asset(
               width: 28,
-              "assets/images/person.png",
+              "assets/images/person-2.png",
               color: kPrimaryColor,
             ),
             label: "Profil",

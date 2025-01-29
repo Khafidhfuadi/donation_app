@@ -105,6 +105,7 @@ class SignFormController extends GetxController {
         Get.toNamed(InitScreen.routeName);
       } on AuthException catch (e) {
         // Handle specific Supabase authentication errors
+        print(e.message);
         String errorMessage = 'Login failed';
         switch (e.message) {
           case 'Invalid login credentials':

@@ -58,19 +58,15 @@ class ProfilePageScreen extends StatelessWidget {
     final controller = Get.put(ProfileController());
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-        centerTitle: true,
-      ),
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const SizedBox(height: 30),
               _buildProfileHeader(controller),
               const SizedBox(height: 16),
-              const Divider(thickness: 1, color: Colors.grey),
+              // const Divider(thickness: 1, color: Colors.grey),
               _buildProfileMenuSection(controller),
               Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -125,23 +121,23 @@ class ProfilePageScreen extends StatelessWidget {
         children: [
           _buildMenuItem(
             icon: Icons.person,
-            title: 'Edit Profile',
+            title: 'Edit Profil',
             onTap: controller.navigateToEditProfile,
           ),
           _buildMenuItem(
             icon: Icons.verified,
-            title: 'Verify Identity',
+            title: 'Verifikasi Identitas',
             onTap: controller.navigateToVerifyIdentity,
           ),
           _buildMenuItem(
             icon: Icons.favorite,
-            title: 'Saved Donations',
+            title: 'Donasi Saya',
             onTap: controller.navigateToSavedDonations,
           ),
           const Divider(),
           _buildMenuItem(
             icon: Icons.people,
-            title: 'About Us',
+            title: 'Tentang Kami',
             onTap: controller.navigateToAboutUs,
           ),
           _buildMenuItem(
@@ -151,12 +147,12 @@ class ProfilePageScreen extends StatelessWidget {
           ),
           _buildMenuItem(
             icon: Icons.chat,
-            title: 'Contact Us',
+            title: 'Kontak Kami',
             onTap: controller.navigateToContactUs,
           ),
           _buildMenuItem(
             icon: Icons.logout,
-            title: 'Logout',
+            title: 'Keluar',
             onTap: controller.showLogoutConfirmation,
             isDestructive: true,
           ),

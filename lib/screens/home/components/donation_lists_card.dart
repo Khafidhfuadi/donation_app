@@ -8,8 +8,7 @@ class DonationProductLists extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> datas = [
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/disaster.png",
         "nama_donasi": "Dampingi Tumbuh Kembang Setiap Anak Indonesia",
         "kategori_donasi": "Bencana Alam",
@@ -18,8 +17,7 @@ class DonationProductLists extends StatelessWidget {
         "durasi_donasi": "7 hari",
       },
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/edu.png",
         "nama_donasi": "Jemput Kemuliaan Santuni Anak Yatim Bisa Sekolah!",
         "kategori_donasi": "Pendidikan",
@@ -28,8 +26,7 @@ class DonationProductLists extends StatelessWidget {
         "durasi_donasi": "10 hari",
       },
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/health.png",
         "nama_donasi": "Sakit Sebatang Kara, Bantu Kakek Bisa Berobat!",
         "kategori_donasi": "Kesehatan",
@@ -38,8 +35,7 @@ class DonationProductLists extends StatelessWidget {
         "durasi_donasi": "5 hari",
       },
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/disaster.png",
         "nama_donasi": "Dampingi Tumbuh Kembang Setiap Anak Indonesia",
         "kategori_donasi": "Bencana Alam",
@@ -48,8 +44,7 @@ class DonationProductLists extends StatelessWidget {
         "durasi_donasi": "7 hari",
       },
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/edu.png",
         "nama_donasi": "Jemput Kemuliaan Santuni Anak Yatim Bisa Sekolah!",
         "kategori_donasi": "Pendidikan",
@@ -58,8 +53,7 @@ class DonationProductLists extends StatelessWidget {
         "durasi_donasi": "10 hari",
       },
       {
-        "thumbnail_donasi":
-            "https://i.ibb.co.com/RykKXdp/b53b21e3-4bb8-4d27-bfd7-2a062df00bf6.jpg",
+        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
         "thumbnail_kat": "assets/images/health.png",
         "nama_donasi": "Sakit Sebatang Kara, Bantu Kakek Bisa Berobat!",
         "kategori_donasi": "Kesehatan",
@@ -139,7 +133,7 @@ class DonationListsCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
+                  child: Image.asset(
                     thumbnailDonasi,
                     width: double.infinity,
                     height: 100,
