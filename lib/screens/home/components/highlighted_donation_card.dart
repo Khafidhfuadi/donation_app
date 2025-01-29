@@ -2,6 +2,7 @@ import 'package:donation_app/constants.dart';
 import 'package:donation_app/screens/home/components/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shimmer/shimmer.dart';
 
 class HighlightedDonation extends StatelessWidget {
   const HighlightedDonation({super.key});
@@ -56,16 +57,19 @@ class HighlightedDonation extends StatelessWidget {
               datas.length,
               (index) => Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
-                child: HighlitedDonationCard(
-                  thumbnailDonasi: datas[index]["thumbnail_donasi"],
-                  namaDonasi: datas[index]["nama_donasi"],
-                  kategoriDonasi: datas[index]["kategori_donasi"],
-                  penggalangDana: datas[index]["penggalang_dana"],
-                  jumlahDanaTerkumpul: datas[index]["jumlah_dana_terkumpul"],
-                  durasiDonasi: datas[index]["durasi_donasi"],
-                  thumbnailKat: datas[index]["thumbnail_kat"],
-                  press: () {},
-                ),
+                child: datas.isNotEmpty
+                    ? HighlitedDonationCard(
+                        thumbnailDonasi: datas[index]["thumbnail_donasi"],
+                        namaDonasi: datas[index]["nama_donasi"],
+                        kategoriDonasi: datas[index]["kategori_donasi"],
+                        penggalangDana: datas[index]["penggalang_dana"],
+                        jumlahDanaTerkumpul: datas[index]
+                            ["jumlah_dana_terkumpul"],
+                        durasiDonasi: datas[index]["durasi_donasi"],
+                        thumbnailKat: datas[index]["thumbnail_kat"],
+                        press: () {},
+                      )
+                    : const ShimmerHighlitedDonationCard(),
               ),
             ),
           ),
@@ -301,6 +305,151 @@ class HighlitedDonationCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ShimmerHighlitedDonationCard extends StatelessWidget {
+  const ShimmerHighlitedDonationCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: kPrimaryColor.withAlpha((0.1 * 255).toInt()),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: double.infinity,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: 150,
+              height: 20,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: 100,
+              height: 20,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: double.infinity,
+              height: 8,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: 80,
+                        height: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: 50,
+                        height: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 12),
+                width: 1,
+                height: 24,
+                color: Colors.grey[300],
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: 80,
+                        height: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: 50,
+                        height: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 12),
+                width: 1,
+                height: 24,
+                color: Colors.grey[300],
+              ),
+              Expanded(
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Icon(
+                    Icons.share_rounded,
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

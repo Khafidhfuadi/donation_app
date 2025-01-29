@@ -99,8 +99,7 @@ class SignFormController extends GetxController {
           await _saveLoginState();
         }
 
-        authService.fetchUserInfo();
-        authService.fetchUserStats();
+        await authService.fetchAllUserData();
 
         // Navigate to initial screen on successful login
         Get.toNamed(InitScreen.routeName);
