@@ -1,94 +1,92 @@
 import 'package:donation_app/constants.dart';
+import 'package:donation_app/models/donasi_model.dart';
+import 'package:donation_app/services/donation_services.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:get/get.dart';
 
 class DonationProductLists extends StatelessWidget {
-  const DonationProductLists({super.key});
+  final DonationServices controller = Get.find();
+  final List<DonasiModel> donations;
+
+  DonationProductLists({
+    super.key,
+    required this.donations,
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> datas = [
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/disaster.png",
-        "nama_donasi": "Dampingi Tumbuh Kembang Setiap Anak Indonesia",
-        "kategori_donasi": "Bencana Alam",
-        "penggalang_dana": "Yayasan Bencana Alam",
-        "jumlah_dana_terkumpul": "Rp1.000.000",
-        "durasi_donasi": "7 hari",
-      },
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/edu.png",
-        "nama_donasi": "Jemput Kemuliaan Santuni Anak Yatim Bisa Sekolah!",
-        "kategori_donasi": "Pendidikan",
-        "penggalang_dana": "Yayasan Peduli Lombok",
-        "jumlah_dana_terkumpul": "Rp2.500.000",
-        "durasi_donasi": "10 hari",
-      },
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/health.png",
-        "nama_donasi": "Sakit Sebatang Kara, Bantu Kakek Bisa Berobat!",
-        "kategori_donasi": "Kesehatan",
-        "penggalang_dana": "Yayasan Alam Lestari",
-        "jumlah_dana_terkumpul": "Rp3.000.000",
-        "durasi_donasi": "5 hari",
-      },
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/disaster.png",
-        "nama_donasi": "Dampingi Tumbuh Kembang Setiap Anak Indonesia",
-        "kategori_donasi": "Bencana Alam",
-        "penggalang_dana": "Yayasan Bencana Alam",
-        "jumlah_dana_terkumpul": "Rp1.000.000",
-        "durasi_donasi": "7 hari",
-      },
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/edu.png",
-        "nama_donasi": "Jemput Kemuliaan Santuni Anak Yatim Bisa Sekolah!",
-        "kategori_donasi": "Pendidikan",
-        "penggalang_dana": "Yayasan Peduli Lombok",
-        "jumlah_dana_terkumpul": "Rp2.500.000",
-        "durasi_donasi": "10 hari",
-      },
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/health.png",
-        "nama_donasi": "Sakit Sebatang Kara, Bantu Kakek Bisa Berobat!",
-        "kategori_donasi": "Kesehatan",
-        "penggalang_dana": "Yayasan Alam Lestari",
-        "jumlah_dana_terkumpul": "Rp3.000.000",
-        "durasi_donasi": "5 hari",
-      },
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-      child: Column(
-        children: [
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: datas.map((data) {
-              return SizedBox(
-                width: (MediaQuery.of(context).size.width - 52) / 2,
-                child: DonationListsCard(
-                  thumbnailDonasi: data["thumbnail_donasi"],
-                  namaDonasi: data["nama_donasi"],
-                  kategoriDonasi: data["kategori_donasi"],
-                  penggalangDana: data["penggalang_dana"],
-                  jumlahDanaTerkumpul: data["jumlah_dana_terkumpul"],
-                  durasiDonasi: data["durasi_donasi"],
-                  thumbnailKat: data["thumbnail_kat"],
-                  press: () {},
-                ),
-              );
-            }).toList(),
+    return Obx(() => Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          child: Column(
+            children: [
+              controller.isLoading.value
+                  ? Column(
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              width:
+                                  (MediaQuery.of(context).size.width - 52) / 2,
+                              child: DonationListsCardShimmer(),
+                            ),
+                            SizedBox(width: 12),
+                            SizedBox(
+                              width:
+                                  (MediaQuery.of(context).size.width - 52) / 2,
+                              child: DonationListsCardShimmer(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                      ],
+                    )
+                  : Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: donations.map((data) {
+                        //switch icon thumbnailkat based on data.namaKategori
+                        String thumbnailKat = "assets/images/health.png";
+                        switch (data.namaKategori) {
+                          case "Bencana Alam":
+                            thumbnailKat = "assets/images/disaster.png";
+                            break;
+                          case "Pendidikan":
+                            thumbnailKat = "assets/images/edu.png";
+                            break;
+                          case "Kesehatan":
+                            thumbnailKat = "assets/images/health.png";
+                            break;
+                          case "Pangan":
+                            thumbnailKat = "assets/images/rice.png";
+                            break;
+                          case "Infrastruktur":
+                            thumbnailKat = "assets/images/road.png";
+                            break;
+                        }
+                        return SizedBox(
+                          width: (MediaQuery.of(context).size.width - 52) / 2,
+                          child: DonationListsCard(
+                            thumbnailDonasi: data.thumbnailDonasi,
+                            durasiDonasi:
+                                "${data.detailDonasi!.tanggalBerakhir.difference(data.detailDonasi!.approvedAt).inDays} hari",
+                            namaDonasi: data.namaDonasi,
+                            kategoriDonasi: data.namaKategori,
+                            penggalangDana: data.namaPenggalang,
+                            jumlahDanaTerkumpul:
+                                "Rp ${data.terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
+                            thumbnailKat: thumbnailKat,
+                            persentase:
+                                (data.terkumpul / data.targetDonasi * 100)
+                                    .toInt(),
+                            press: () {},
+                          ),
+                        );
+                      }).toList(),
+                    ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
 
@@ -102,6 +100,7 @@ class DonationListsCard extends StatelessWidget {
     required this.jumlahDanaTerkumpul,
     required this.durasiDonasi,
     required this.thumbnailKat,
+    required this.persentase,
     required this.press,
   });
 
@@ -112,6 +111,8 @@ class DonationListsCard extends StatelessWidget {
       jumlahDanaTerkumpul,
       durasiDonasi,
       thumbnailKat;
+
+  final int persentase;
   final GestureTapCallback press;
 
   @override
@@ -133,11 +134,20 @@ class DonationListsCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(
+                  child: Image.network(
                     thumbnailDonasi,
                     width: double.infinity,
                     height: 100,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      // Show a placeholder when image fails to load
+                      return Container(
+                        width: double.infinity,
+                        height: 100,
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.image_not_supported),
+                      );
+                    },
                   ),
                 ),
                 Positioned(
@@ -213,7 +223,7 @@ class DonationListsCard extends StatelessWidget {
                 ),
                 LayoutBuilder(
                   builder: (context, constraints) => Container(
-                    width: constraints.maxWidth * 0.5,
+                    width: constraints.maxWidth * (persentase / 100),
                     height: 4,
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -277,7 +287,6 @@ class DonationListsCard extends StatelessWidget {
   }
 }
 
-//shimmer
 class DonationListsCardShimmer extends StatelessWidget {
   const DonationListsCardShimmer({super.key});
 
@@ -287,94 +296,57 @@ class DonationListsCardShimmer extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: kPrimaryColor.withAlpha((0.1 * 255).toInt()),
+        gradient: kPrimaryGradientColor,
         borderRadius: BorderRadius.circular(14),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Allow the column to shrink
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(10),
-                ),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: double.infinity,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(10),
               ),
-              Positioned(
-                top: 4,
-                right: 4,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(77, 161, 169, 0.5),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey[300],
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.grey[300],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           const SizedBox(height: 8),
-          Container(
-            width: double.infinity,
-            height: 12,
-            color: Colors.grey[300],
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: double.infinity,
+              height: 12,
+              color: Colors.grey[300],
+            ),
           ),
           const SizedBox(height: 2),
-          Container(
-            width: double.infinity,
-            height: 10,
-            color: Colors.grey[300],
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: 100,
+              height: 10,
+              color: Colors.grey[300],
+            ),
           ),
-          const SizedBox(height: 12),
-          Stack(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 8,
-                decoration: BoxDecoration(
-                  color: kPrimaryColor.withAlpha((0.1 * 255).toInt()),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+          const SizedBox(height: 20),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              width: double.infinity,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(10),
               ),
-              LayoutBuilder(
-                builder: (context, constraints) => Container(
-                  width: constraints.maxWidth * 0.5,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: kPrimaryColor,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
           const SizedBox(height: 12),
           Row(
@@ -383,15 +355,24 @@ class DonationListsCardShimmer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: 12,
-                      color: Colors.grey[300],
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: double.infinity,
+                        height: 12,
+                        color: Colors.grey[300],
+                      ),
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 10,
-                      color: Colors.grey[300],
+                    const SizedBox(height: 2),
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: 50,
+                        height: 10,
+                        color: Colors.grey[300],
+                      ),
                     ),
                   ],
                 ),
@@ -400,15 +381,24 @@ class DonationListsCardShimmer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Container(
-                      width: double.infinity,
-                      height: 12,
-                      color: Colors.grey[300],
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: double.infinity,
+                        height: 12,
+                        color: Colors.grey[300],
+                      ),
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 10,
-                      color: Colors.grey[300],
+                    const SizedBox(height: 2),
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        width: 50,
+                        height: 10,
+                        color: Colors.grey[300],
+                      ),
                     ),
                   ],
                 ),

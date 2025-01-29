@@ -1,78 +1,104 @@
 import 'package:donation_app/constants.dart';
+import 'package:donation_app/models/donasi_model.dart';
 import 'package:donation_app/screens/home/components/section_title.dart';
+import 'package:donation_app/services/donation_services.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:get/get.dart';
 
 class HighlightedDonation extends StatelessWidget {
-  const HighlightedDonation({super.key});
+  final DonationServices controller = Get.find();
+  final List<DonasiModel> donations;
+
+  HighlightedDonation({
+    super.key,
+    required this.donations,
+  });
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> datas = [
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/disaster.png",
-        "nama_donasi": "Banjir Bandung",
-        "kategori_donasi": "Bencana Alam",
-        "penggalang_dana": "Yayasan Bencana Alam",
-        "jumlah_dana_terkumpul": "Rp1.000.000",
-        "durasi_donasi": "7 hari",
-      },
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/edu.png",
-        "nama_donasi": "Gempa Lombok",
-        "kategori_donasi": "Pendidikan",
-        "penggalang_dana": "Yayasan Peduli Lombok",
-        "jumlah_dana_terkumpul": "Rp2.500.000",
-        "durasi_donasi": "10 hari",
-      },
-      {
-        "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-        "thumbnail_kat": "assets/images/health.png",
-        "nama_donasi": "Kebakaran Hutan",
-        "kategori_donasi": "Kesehatan",
-        "penggalang_dana": "Yayasan Alam Lestari",
-        "jumlah_dana_terkumpul": "Rp3.000.000",
-        "durasi_donasi": "5 hari",
-      },
-    ];
+    // List<Map<String, dynamic>> datas = [
+    //   {
+    //     "thumbnail_donasi": "assets/images/thumb-donation.jpg",
+    //     "thumbnail_kat": "assets/images/disaster.png",
+    //     "nama_donasi": "Banjir Bandung",
+    //     "kategori_donasi": "Bencana Alam",
+    //     "penggalang_dana": "Yayasan Bencana Alam",
+    //     "jumlah_dana_terkumpul": "Rp1.000.000",
+    //     "durasi_donasi": "7 hari",
+    //   },
+    //   {
+    //     "thumbnail_donasi": "assets/images/thumb-donation.jpg",
+    //     "thumbnail_kat": "assets/images/edu.png",
+    //     "nama_donasi": "Gempa Lombok",
+    //     "kategori_donasi": "Pendidikan",
+    //     "penggalang_dana": "Yayasan Peduli Lombok",
+    //     "jumlah_dana_terkumpul": "Rp2.500.000",
+    //     "durasi_donasi": "10 hari",
+    //   },
+    //   {
+    //     "thumbnail_donasi": "assets/images/thumb-donation.jpg",
+    //     "thumbnail_kat": "assets/images/health.png",
+    //     "nama_donasi": "Kebakaran Hutan",
+    //     "kategori_donasi": "Kesehatan",
+    //     "penggalang_dana": "Yayasan Alam Lestari",
+    //     "jumlah_dana_terkumpul": "Rp3.000.000",
+    //     "durasi_donasi": "5 hari",
+    //   },
+    // ];
 
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          //categories title
-          SectionTitle(
-              title: "Bantu Sesama, Pulih Bersama",
-              press: () {
-                null;
-              }),
-          Column(
-            children: List.generate(
-              datas.length,
-              (index) => Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: datas.isNotEmpty
-                    ? HighlitedDonationCard(
-                        thumbnailDonasi: datas[index]["thumbnail_donasi"],
-                        namaDonasi: datas[index]["nama_donasi"],
-                        kategoriDonasi: datas[index]["kategori_donasi"],
-                        penggalangDana: datas[index]["penggalang_dana"],
-                        jumlahDanaTerkumpul: datas[index]
-                            ["jumlah_dana_terkumpul"],
-                        durasiDonasi: datas[index]["durasi_donasi"],
-                        thumbnailKat: datas[index]["thumbnail_kat"],
-                        press: () {},
-                      )
-                    : const ShimmerHighlitedDonationCard(),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    return Obx(() => Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(children: [
+            //categories title
+            SectionTitle(
+                title: "Bantu Sesama, Pulih Bersama",
+                press: () {
+                  null;
+                }),
+            controller.isLoading.value
+                ? const ShimmerHighlitedDonationCard()
+                : Padding(
+                    padding: const EdgeInsets.only(bottom: 12.0),
+                    child: HighlitedDonationCard(
+                      thumbnailDonasi: donations[0].thumbnailDonasi,
+                      durasiDonasi:
+                          "${donations[0].detailDonasi!.tanggalBerakhir.difference(donations[0].detailDonasi!.approvedAt).inDays} hari",
+                      namaDonasi: donations[0].namaDonasi,
+                      kategoriDonasi: donations[0].namaKategori,
+                      penggalangDana: donations[0].namaPenggalang,
+                      jumlahDanaTerkumpul:
+                          "Rp ${donations[0].terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
+                      thumbnailKat: () {
+                        String thumbnailKat = "assets/images/health.png";
+                        switch (donations[0].namaKategori) {
+                          case "Bencana Alam":
+                            thumbnailKat = "assets/images/disaster.png";
+                            break;
+                          case "Pendidikan":
+                            thumbnailKat = "assets/images/edu.png";
+                            break;
+                          case "Kesehatan":
+                            thumbnailKat = "assets/images/health.png";
+                            break;
+                          case "Pangan":
+                            thumbnailKat = "assets/images/rice.png";
+                            break;
+                          case "Infrastruktur":
+                            thumbnailKat = "assets/images/road.png";
+                            break;
+                        }
+                        return thumbnailKat;
+                      }(),
+                      persentase: (donations[0].terkumpul /
+                              donations[0].targetDonasi *
+                              100)
+                          .toInt(),
+                      press: () {},
+                    )),
+          ]),
+        ));
   }
 }
 
@@ -87,6 +113,7 @@ class HighlitedDonationCard extends StatelessWidget {
     required this.durasiDonasi,
     required this.thumbnailKat,
     required this.press,
+    required this.persentase,
   });
 
   final String thumbnailDonasi,
@@ -96,6 +123,7 @@ class HighlitedDonationCard extends StatelessWidget {
       jumlahDanaTerkumpul,
       durasiDonasi,
       thumbnailKat;
+  final int persentase;
   final GestureTapCallback press;
 
   @override
@@ -116,11 +144,20 @@ class HighlitedDonationCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
-                  child: Image.asset(
+                  child: Image.network(
                     thumbnailDonasi,
                     width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      // Show a placeholder when image fails to load
+                      return Container(
+                        width: double.infinity,
+                        height: 200,
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.image_not_supported),
+                      );
+                    },
                   ),
                 ),
                 Positioned(
@@ -196,7 +233,7 @@ class HighlitedDonationCard extends StatelessWidget {
                 ),
                 LayoutBuilder(
                   builder: (context, constraints) => Container(
-                    width: constraints.maxWidth * 0.5,
+                    width: constraints.maxWidth * (persentase / 100),
                     height: 8,
                     decoration: BoxDecoration(
                       color: Colors.white,
