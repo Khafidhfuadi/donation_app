@@ -45,11 +45,10 @@ class _InitScreenState extends State<InitScreen> {
       bottomNavigationBar: BottomNavigationBar(
         onTap: updateCurrentIndex,
         currentIndex: currentSelectedIndex,
-        // showSelectedLabels: false,
-        // showUnselectedLabels: false,
         type: BottomNavigationBarType.fixed,
-        selectedLabelStyle: const TextStyle(
-            fontSize: 12, fontWeight: FontWeight.w600, color: kPrimaryColor),
+        selectedLabelStyle:
+            const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+        selectedItemColor: kPrimaryColor,
         items: [
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
@@ -68,24 +67,22 @@ class _InitScreenState extends State<InitScreen> {
                 BlendMode.srcIn,
               ),
             ),
-            label: "Home",
+            label: "Beranda",
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              "assets/images/gift.png",
-              width: 28,
-              color: inActiveIconColor, // Use `color` instead of `colorFilter`
-            ),
+                width: 28, "assets/images/care.png", color: inActiveIconColor),
             activeIcon: Image.asset(
-              "assets/images/gift.gif", // Use gif for active icon
               width: 28,
+              "assets/images/care.png",
+              color: kPrimaryColor,
             ),
-            label: "Fav",
+            label: "Donasi Saya",
           ),
           BottomNavigationBarItem(
             icon: SvgPicture.asset(
               width: 28,
-              "assets/icons/Chat bubble Icon.svg",
+              "assets/icons/notif.svg",
               colorFilter: const ColorFilter.mode(
                 inActiveIconColor,
                 BlendMode.srcIn,
@@ -93,32 +90,25 @@ class _InitScreenState extends State<InitScreen> {
             ),
             activeIcon: SvgPicture.asset(
               width: 28,
-              "assets/icons/Chat bubble Icon.svg",
+              "assets/icons/notif.svg",
               colorFilter: const ColorFilter.mode(
                 kPrimaryColor,
                 BlendMode.srcIn,
               ),
             ),
-            label: "Chat",
+            label: "Notifikasi",
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(
+            icon: Image.asset(
+                width: 28,
+                "assets/images/person.png",
+                color: inActiveIconColor),
+            activeIcon: Image.asset(
               width: 28,
-              "assets/icons/User Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                inActiveIconColor,
-                BlendMode.srcIn,
-              ),
+              "assets/images/person.png",
+              color: kPrimaryColor,
             ),
-            activeIcon: SvgPicture.asset(
-              width: 28,
-              "assets/icons/User Icon.svg",
-              colorFilter: const ColorFilter.mode(
-                kPrimaryColor,
-                BlendMode.srcIn,
-              ),
-            ),
-            label: "Fav",
+            label: "Profil",
           ),
         ],
       ),
