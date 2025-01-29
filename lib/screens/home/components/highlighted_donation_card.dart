@@ -17,8 +17,8 @@ class HighlightedDonation extends StatelessWidget {
         "nama_donasi": "Banjir Bandung",
         "kategori_donasi": "Bencana Alam",
         "penggalang_dana": "Yayasan Bencana Alam",
-        "jumlah_dana_terkumpul": "Rp 1.000.000",
-        "durasi_donasi": "7 hari lagi",
+        "jumlah_dana_terkumpul": "Rp1.000.000",
+        "durasi_donasi": "7 hari",
       },
       {
         "thumbnail_donasi":
@@ -27,8 +27,8 @@ class HighlightedDonation extends StatelessWidget {
         "nama_donasi": "Gempa Lombok",
         "kategori_donasi": "Pendidikan",
         "penggalang_dana": "Yayasan Peduli Lombok",
-        "jumlah_dana_terkumpul": "Rp 2.500.000",
-        "durasi_donasi": "10 hari lagi",
+        "jumlah_dana_terkumpul": "Rp2.500.000",
+        "durasi_donasi": "10 hari",
       },
       {
         "thumbnail_donasi":
@@ -37,8 +37,8 @@ class HighlightedDonation extends StatelessWidget {
         "nama_donasi": "Kebakaran Hutan",
         "kategori_donasi": "Kesehatan",
         "penggalang_dana": "Yayasan Alam Lestari",
-        "jumlah_dana_terkumpul": "Rp 3.000.000",
-        "durasi_donasi": "5 hari lagi",
+        "jumlah_dana_terkumpul": "Rp3.000.000",
+        "durasi_donasi": "5 hari",
       },
     ];
 
@@ -109,7 +109,7 @@ class HighlitedDonationCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: kPrimaryColor.withAlpha((0.1 * 255).toInt()),
+          gradient: kPrimaryGradientColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Column(
@@ -135,7 +135,7 @@ class HighlitedDonationCard extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(77, 161, 169, 0.5),
+                      color: Colors.white.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Row(
@@ -143,7 +143,7 @@ class HighlitedDonationCard extends StatelessWidget {
                         Text(
                           kategoriDonasi,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 12,
                           ),
                         ),
@@ -151,7 +151,7 @@ class HighlitedDonationCard extends StatelessWidget {
                         Image.asset(
                           thumbnailKat,
                           width: 16,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ],
                     ),
@@ -160,11 +160,10 @@ class HighlitedDonationCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            const SizedBox(height: 4),
             Text(
               namaDonasi,
               style: const TextStyle(
-                color: kTextColor,
+                color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -172,15 +171,17 @@ class HighlitedDonationCard extends StatelessWidget {
             const SizedBox(height: 4),
             Row(
               children: [
-                Text(penggalangDana,
-                    style: TextStyle(
-                      color: kTextColor,
-                      fontSize: 14,
-                    )),
+                Text(
+                  penggalangDana,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                  ),
+                ),
                 const SizedBox(width: 4),
-                Icon(
+                const Icon(
                   Icons.verified_rounded,
-                  color: kPrimaryColor,
+                  color: Colors.white,
                   size: 20,
                 ),
               ],
@@ -192,7 +193,7 @@ class HighlitedDonationCard extends StatelessWidget {
                   width: double.infinity,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: kPrimaryColor.withAlpha((0.1 * 255).toInt()),
+                    color: Colors.white.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
@@ -201,7 +202,7 @@ class HighlitedDonationCard extends StatelessWidget {
                     width: constraints.maxWidth * 0.5,
                     height: 8,
                     decoration: BoxDecoration(
-                      color: kPrimaryColor,
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -218,36 +219,25 @@ class HighlitedDonationCard extends StatelessWidget {
                       Text(
                         jumlahDanaTerkumpul,
                         style: const TextStyle(
-                          color: kTextColor,
+                          color: Colors.white,
                           fontSize: 14,
                         ),
                       ),
                       Text(
                         "Terkumpul",
                         style: TextStyle(
-                          color: Color.fromRGBO(
-                            kTextColor.r.toInt(),
-                            kTextColor.g.toInt(),
-                            kTextColor.b.toInt(),
-                            0.5,
-                          ),
+                          color: Colors.white.withOpacity(0.5),
                           fontSize: 12,
                         ),
                       ),
                     ],
                   ),
                 ),
-                //border
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 12),
                   width: 1,
                   height: 24,
-                  color: Color.fromRGBO(
-                    kTextColor.r.toInt(),
-                    kTextColor.g.toInt(),
-                    kTextColor.b.toInt(),
-                    0.5,
-                  ),
+                  color: Colors.white.withOpacity(0.5),
                 ),
                 Expanded(
                   child: Column(
@@ -256,38 +246,26 @@ class HighlitedDonationCard extends StatelessWidget {
                       Text(
                         durasiDonasi,
                         style: const TextStyle(
-                          color: kTextColor,
+                          color: Colors.white,
                           fontSize: 14,
                         ),
                       ),
                       Text(
                         "Tersisa",
                         style: TextStyle(
-                          color: Color.fromRGBO(
-                            kTextColor.r.toInt(),
-                            kTextColor.g.toInt(),
-                            kTextColor.b.toInt(),
-                            0.5,
-                          ),
+                          color: Colors.white.withOpacity(0.5),
                           fontSize: 12,
                         ),
                       ),
                     ],
                   ),
                 ),
-                //border
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 12),
                   width: 1,
                   height: 24,
-                  color: Color.fromRGBO(
-                    kTextColor.r.toInt(),
-                    kTextColor.g.toInt(),
-                    kTextColor.b.toInt(),
-                    0.5,
-                  ),
+                  color: Colors.white.withOpacity(0.5),
                 ),
-                // share icon button
                 Expanded(
                   child: IconButton(
                     onPressed: () {
@@ -297,7 +275,7 @@ class HighlitedDonationCard extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.share_rounded,
-                      color: kTextColor,
+                      color: Colors.white,
                     ),
                   ),
                 ),

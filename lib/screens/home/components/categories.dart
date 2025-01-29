@@ -36,7 +36,7 @@ class Categories extends StatelessWidget {
               children: List.generate(
                 categories.length,
                 (index) => Padding(
-                  padding: const EdgeInsets.only(right: 16),
+                  padding: const EdgeInsets.only(right: 12),
                   child: CategoryCard(
                     icon: categories[index]["icon"],
                     text: categories[index]["text"],
