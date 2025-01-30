@@ -1,92 +1,67 @@
 import 'package:donation_app/constants.dart';
 import 'package:donation_app/models/donasi_model.dart';
-import 'package:donation_app/services/donation_services.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:get/get.dart';
 
 class DonationProductLists extends StatelessWidget {
-  final DonationServices controller = Get.find();
   final List<DonasiModel> donations;
 
-  DonationProductLists({
+  const DonationProductLists({
     super.key,
     required this.donations,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-          child: Column(
-            children: [
-              controller.isLoading.value
-                  ? Column(
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width:
-                                  (MediaQuery.of(context).size.width - 52) / 2,
-                              child: DonationListsCardShimmer(),
-                            ),
-                            SizedBox(width: 12),
-                            SizedBox(
-                              width:
-                                  (MediaQuery.of(context).size.width - 52) / 2,
-                              child: DonationListsCardShimmer(),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                      ],
-                    )
-                  : Wrap(
-                      spacing: 12,
-                      runSpacing: 12,
-                      children: donations.map((data) {
-                        //switch icon thumbnailkat based on data.namaKategori
-                        String thumbnailKat = "assets/images/health.png";
-                        switch (data.namaKategori) {
-                          case "Bencana Alam":
-                            thumbnailKat = "assets/images/disaster.png";
-                            break;
-                          case "Pendidikan":
-                            thumbnailKat = "assets/images/edu.png";
-                            break;
-                          case "Kesehatan":
-                            thumbnailKat = "assets/images/health.png";
-                            break;
-                          case "Pangan":
-                            thumbnailKat = "assets/images/rice.png";
-                            break;
-                          case "Infrastruktur":
-                            thumbnailKat = "assets/images/road.png";
-                            break;
-                        }
-                        return SizedBox(
-                          width: (MediaQuery.of(context).size.width - 52) / 2,
-                          child: DonationListsCard(
-                            thumbnailDonasi: data.thumbnailDonasi,
-                            durasiDonasi:
-                                "${data.detailDonasi!.tanggalBerakhir.difference(data.detailDonasi!.approvedAt).inDays} hari",
-                            namaDonasi: data.namaDonasi,
-                            kategoriDonasi: data.namaKategori,
-                            penggalangDana: data.namaPenggalang,
-                            jumlahDanaTerkumpul:
-                                "Rp ${data.terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
-                            thumbnailKat: thumbnailKat,
-                            persentase:
-                                (data.terkumpul / data.targetDonasi * 100)
-                                    .toInt(),
-                            press: () {},
-                          ),
-                        );
-                      }).toList(),
-                    ),
-            ],
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      child: Column(
+        children: [
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: donations.map((data) {
+              //switch icon thumbnailkat based on data.namaKategori
+              String thumbnailKat = "assets/images/health.png";
+              switch (data.namaKategori) {
+                case "Bencana Alam":
+                  thumbnailKat = "assets/images/disaster.png";
+                  break;
+                case "Pendidikan":
+                  thumbnailKat = "assets/images/edu.png";
+                  break;
+                case "Kesehatan":
+                  thumbnailKat = "assets/images/health.png";
+                  break;
+                case "Pangan":
+                  thumbnailKat = "assets/images/rice.png";
+                  break;
+                case "Infrastruktur":
+                  thumbnailKat = "assets/images/road.png";
+                  break;
+              }
+              return SizedBox(
+                width: (MediaQuery.of(context).size.width - 52) / 2,
+                child: DonationListsCard(
+                  thumbnailDonasi: data.thumbnailDonasi,
+                  durasiDonasi:
+                      "${data.detailDonasi!.tanggalBerakhir.difference(data.detailDonasi!.approvedAt).inDays} hari",
+                  namaDonasi: data.namaDonasi,
+                  kategoriDonasi: data.namaKategori,
+                  penggalangDana: data.namaPenggalang,
+                  jumlahDanaTerkumpul:
+                      "Rp ${data.terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
+                  thumbnailKat: thumbnailKat,
+                  persentase:
+                      (data.terkumpul / data.targetDonasi * 100).toInt(),
+                  press: () {},
+                ),
+              );
+            }).toList(),
           ),
-        ));
+        ],
+      ),
+    );
   }
 }
 
@@ -296,7 +271,7 @@ class DonationListsCardShimmer extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        gradient: kPrimaryGradientColor,
+        color: kPrimaryColor.withAlpha((0.1 * 255).toInt()),
         borderRadius: BorderRadius.circular(14),
       ),
       child: Column(

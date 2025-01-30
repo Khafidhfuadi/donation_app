@@ -15,28 +15,38 @@ class AuthService extends GetxController {
   // Add loading states
   final RxBool isLoadingUser = false.obs;
   final RxBool isLoadingStats = false.obs;
-
   @override
   void onInit() {
     super.onInit();
-    checkLoginStatus();
+    _initializeAuth();
   }
 
-  Future<void> checkLoginStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-
+  // Make this a synchronous check for the initial route
+  void checkLoginStatus() {
     final session = supabase.auth.currentSession;
+    if (session != null) {
+      isLoggedIn.value = true;
+    }
+  }
+
+  // Move the async operations to a separate method
+  Future<void> _initializeAuth() async {
+    final prefs = await SharedPreferences.getInstance();
+    final session = supabase.auth.currentSession;
+
     if (session != null) {
       isLoggedIn.value = true;
       await prefs.setBool('isLoggedIn', true);
 
-      // Fetch data before navigation
-      await Future.wait([
+      // Fetch user data in background
+      Future.wait([
         fetchUserInfo(),
         fetchUserStats(),
       ]);
 
-      Get.offAllNamed(InitScreen.routeName);
+      if (Get.currentRoute != InitScreen.routeName) {
+        Get.offAllNamed(InitScreen.routeName);
+      }
       return;
     }
 

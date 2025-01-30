@@ -1,104 +1,68 @@
 import 'package:donation_app/constants.dart';
 import 'package:donation_app/models/donasi_model.dart';
 import 'package:donation_app/screens/home/components/section_title.dart';
-import 'package:donation_app/services/donation_services.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:get/get.dart';
 
 class HighlightedDonation extends StatelessWidget {
-  final DonationServices controller = Get.find();
   final List<DonasiModel> donations;
 
-  HighlightedDonation({
+  const HighlightedDonation({
     super.key,
     required this.donations,
   });
 
   @override
   Widget build(BuildContext context) {
-    // List<Map<String, dynamic>> datas = [
-    //   {
-    //     "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-    //     "thumbnail_kat": "assets/images/disaster.png",
-    //     "nama_donasi": "Banjir Bandung",
-    //     "kategori_donasi": "Bencana Alam",
-    //     "penggalang_dana": "Yayasan Bencana Alam",
-    //     "jumlah_dana_terkumpul": "Rp1.000.000",
-    //     "durasi_donasi": "7 hari",
-    //   },
-    //   {
-    //     "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-    //     "thumbnail_kat": "assets/images/edu.png",
-    //     "nama_donasi": "Gempa Lombok",
-    //     "kategori_donasi": "Pendidikan",
-    //     "penggalang_dana": "Yayasan Peduli Lombok",
-    //     "jumlah_dana_terkumpul": "Rp2.500.000",
-    //     "durasi_donasi": "10 hari",
-    //   },
-    //   {
-    //     "thumbnail_donasi": "assets/images/thumb-donation.jpg",
-    //     "thumbnail_kat": "assets/images/health.png",
-    //     "nama_donasi": "Kebakaran Hutan",
-    //     "kategori_donasi": "Kesehatan",
-    //     "penggalang_dana": "Yayasan Alam Lestari",
-    //     "jumlah_dana_terkumpul": "Rp3.000.000",
-    //     "durasi_donasi": "5 hari",
-    //   },
-    // ];
-
-    return Obx(() => Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(children: [
-            //categories title
-            SectionTitle(
-                title: "Bantu Sesama, Pulih Bersama",
-                press: () {
-                  null;
-                }),
-            controller.isLoading.value
-                ? const ShimmerHighlitedDonationCard()
-                : Padding(
-                    padding: const EdgeInsets.only(bottom: 12.0),
-                    child: HighlitedDonationCard(
-                      thumbnailDonasi: donations[0].thumbnailDonasi,
-                      durasiDonasi:
-                          "${donations[0].detailDonasi!.tanggalBerakhir.difference(donations[0].detailDonasi!.approvedAt).inDays} hari",
-                      namaDonasi: donations[0].namaDonasi,
-                      kategoriDonasi: donations[0].namaKategori,
-                      penggalangDana: donations[0].namaPenggalang,
-                      jumlahDanaTerkumpul:
-                          "Rp ${donations[0].terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
-                      thumbnailKat: () {
-                        String thumbnailKat = "assets/images/health.png";
-                        switch (donations[0].namaKategori) {
-                          case "Bencana Alam":
-                            thumbnailKat = "assets/images/disaster.png";
-                            break;
-                          case "Pendidikan":
-                            thumbnailKat = "assets/images/edu.png";
-                            break;
-                          case "Kesehatan":
-                            thumbnailKat = "assets/images/health.png";
-                            break;
-                          case "Pangan":
-                            thumbnailKat = "assets/images/rice.png";
-                            break;
-                          case "Infrastruktur":
-                            thumbnailKat = "assets/images/road.png";
-                            break;
-                        }
-                        return thumbnailKat;
-                      }(),
-                      persentase: (donations[0].terkumpul /
-                              donations[0].targetDonasi *
-                              100)
-                          .toInt(),
-                      press: () {},
-                    )),
-          ]),
-        ));
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(children: [
+        //categories title
+        SectionTitle(
+            title: "Bantu Sesama, Pulih Bersama",
+            press: () {
+              null;
+            }),
+        Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: HighlitedDonationCard(
+              thumbnailDonasi: donations[0].thumbnailDonasi,
+              durasiDonasi:
+                  "${donations[0].detailDonasi!.tanggalBerakhir.difference(donations[0].detailDonasi!.approvedAt).inDays} hari",
+              namaDonasi: donations[0].namaDonasi,
+              kategoriDonasi: donations[0].namaKategori,
+              penggalangDana: donations[0].namaPenggalang,
+              jumlahDanaTerkumpul:
+                  "Rp ${donations[0].terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
+              thumbnailKat: () {
+                String thumbnailKat = "assets/images/health.png";
+                switch (donations[0].namaKategori) {
+                  case "Bencana Alam":
+                    thumbnailKat = "assets/images/disaster.png";
+                    break;
+                  case "Pendidikan":
+                    thumbnailKat = "assets/images/edu.png";
+                    break;
+                  case "Kesehatan":
+                    thumbnailKat = "assets/images/health.png";
+                    break;
+                  case "Pangan":
+                    thumbnailKat = "assets/images/rice.png";
+                    break;
+                  case "Infrastruktur":
+                    thumbnailKat = "assets/images/road.png";
+                    break;
+                }
+                return thumbnailKat;
+              }(),
+              persentase:
+                  (donations[0].terkumpul / donations[0].targetDonasi * 100)
+                      .toInt(),
+              press: () {},
+            )),
+      ]),
+    );
   }
 }
 

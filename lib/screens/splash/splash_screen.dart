@@ -48,15 +48,6 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final SplashController controller = Get.put(SplashController());
 
-    final authService = Get.find<AuthService>();
-
-    // Use ever to react to login status changes
-    ever(authService.isLoggedIn, (isLoggedIn) {
-      if (isLoggedIn) {
-        Get.offAllNamed(InitScreen.routeName);
-      }
-    });
-
     return Scaffold(
       body: SafeArea(
         child: SizedBox(

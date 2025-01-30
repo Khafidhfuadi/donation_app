@@ -1,6 +1,8 @@
 import 'package:donation_app/routes.dart';
+import 'package:donation_app/screens/init_screen.dart';
 import 'package:donation_app/screens/splash/splash_screen.dart';
 import 'package:donation_app/services/auth_services.dart';
+import 'package:donation_app/services/donation_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,6 +11,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import './theme.dart';
 
 Future<void> main() async {
+  Get.lazyPut<DonationServices>(() => DonationServices(), fenix: true);
+
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferences.getInstance();
 
@@ -22,17 +26,26 @@ Future<void> main() async {
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key}) {
+    // Initialize AuthService early
+    final authService = Get.put(AuthService());
+
+    // Check login status before building the app
+    authService.checkLoginStatus();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(AuthService());
+    final authService = Get.find<AuthService>();
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'The Flutter Way - Template',
       theme: AppTheme.lightTheme(context),
-      initialRoute: SplashScreen.routeName,
+      // Set initial route based on login status
+      initialRoute: authService.isLoggedIn.value
+          ? InitScreen.routeName
+          : SplashScreen.routeName,
       getPages: AppRoutes.routes,
     );
   }
