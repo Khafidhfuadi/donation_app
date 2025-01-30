@@ -1,5 +1,6 @@
 import 'package:donation_app/constants.dart';
 import 'package:donation_app/models/donasi_model.dart';
+import 'package:donation_app/screens/donation_single/donation_single_screen.dart';
 import 'package:donation_app/screens/home/components/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -59,7 +60,13 @@ class HighlightedDonation extends StatelessWidget {
               persentase:
                   (donations[0].terkumpul / donations[0].targetDonasi * 100)
                       .toInt(),
-              press: () {},
+              press: () {
+                Navigator.pushNamed(
+                  context,
+                  DonationSingleScreen.routeName,
+                  arguments: DonationDetailsArguments(donation: donations[0]),
+                );
+              },
             )),
       ]),
     );

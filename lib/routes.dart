@@ -1,3 +1,4 @@
+import 'package:donation_app/screens/donation_single/donation_single_screen.dart';
 import 'package:get/get.dart';
 import 'package:donation_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:donation_app/screens/init_screen.dart';
@@ -31,6 +32,10 @@ class AppRoutes {
     GetPage(
       name: ProfilePageScreen.routeName,
       page: () => const ProfilePageScreen(),
+    ),
+    GetPage(
+      name: DonationSingleScreen.routeName,
+      page: () => const DonationSingleScreen(),
     ),
   ];
 }
