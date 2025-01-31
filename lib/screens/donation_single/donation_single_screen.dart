@@ -17,11 +17,13 @@ class DonationSingleScreen extends StatelessWidget {
     final DonationDetailsArguments args =
         ModalRoute.of(context)!.settings.arguments as DonationDetailsArguments;
     final donation = args.donation;
+    final jumlahDanaTerkumpul = args.jumlahDanaTerkumpul;
+    final durasiDonasi = args.durasiDonasi;
+    final persentase = args.persentase;
 
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white,
       body: Stack(
         children: [
           // Content
@@ -33,6 +35,9 @@ class DonationSingleScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: DonationDescription(
                   donasi: donation,
+                  jumlahDanaTerkumpul: jumlahDanaTerkumpul,
+                  durasiDonasi: durasiDonasi,
+                  persentase: persentase,
                   pressOnSeeMore: () {},
                 ),
               ),
@@ -56,7 +61,7 @@ class DonationSingleScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
                     padding: EdgeInsets.zero,
-                    elevation: 0,
+                    elevation: 1,
                     backgroundColor: Colors.white,
                   ),
                   child: const Icon(
@@ -81,8 +86,8 @@ class DonationSingleScreen extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          const Text(
-                            "4.7",
+                          Text(
+                            donation.namaKategori,
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.black,
@@ -121,6 +126,12 @@ class DonationSingleScreen extends StatelessWidget {
 
 class DonationDetailsArguments {
   final DonasiModel donation;
+  final String jumlahDanaTerkumpul;
+  final int durasiDonasi, persentase;
 
-  DonationDetailsArguments({required this.donation});
+  DonationDetailsArguments(
+      {required this.donation,
+      required this.jumlahDanaTerkumpul,
+      required this.durasiDonasi,
+      required this.persentase});
 }

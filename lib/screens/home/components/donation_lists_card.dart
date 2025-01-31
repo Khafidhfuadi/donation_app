@@ -52,6 +52,8 @@ class DonationProductLists extends StatelessWidget {
                   jumlahDanaTerkumpul:
                       "Rp ${data.terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
                   thumbnailKat: thumbnailKat,
+                  isKomoditas: data.isKomoditas,
+                  namaKomoditas: data.detailDonasi!.namaKomoditas ?? "",
                   persentase:
                       (data.terkumpul / data.targetDonasi * 100).toInt(),
                   press: () {},
@@ -77,6 +79,8 @@ class DonationListsCard extends StatelessWidget {
     required this.thumbnailKat,
     required this.persentase,
     required this.press,
+    required this.isKomoditas,
+    required this.namaKomoditas,
   });
 
   final String thumbnailDonasi,
@@ -85,7 +89,10 @@ class DonationListsCard extends StatelessWidget {
       penggalangDana,
       jumlahDanaTerkumpul,
       durasiDonasi,
-      thumbnailKat;
+      thumbnailKat,
+      namaKomoditas;
+
+  final bool isKomoditas;
 
   final int persentase;
   final GestureTapCallback press;
@@ -158,7 +165,62 @@ class DonationListsCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
+            if (isKomoditas)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.white54),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/commodity.png',
+                      width: 14,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Donasi Komoditas ($namaKomoditas)',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            if (!isKomoditas)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.white54),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/money.png',
+                      width: 14,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Donasi Uang',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            const SizedBox(height: 4),
             Text(
               namaDonasi,
               maxLines: 2,
@@ -177,11 +239,11 @@ class DonationListsCard extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 10,
                     )),
-                const SizedBox(width: 4),
+                const SizedBox(width: 2),
                 const Icon(
                   Icons.verified_rounded,
                   color: Colors.white,
-                  size: 14,
+                  size: 12,
                 ),
               ],
             ),

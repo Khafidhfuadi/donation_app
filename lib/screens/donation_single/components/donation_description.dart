@@ -9,9 +9,14 @@ class DonationDescription extends StatelessWidget {
     super.key,
     required this.donasi,
     this.pressOnSeeMore,
+    required this.jumlahDanaTerkumpul,
+    required this.durasiDonasi,
+    required this.persentase,
   });
 
   final DonasiModel donasi;
+  final String jumlahDanaTerkumpul;
+  final int durasiDonasi, persentase;
   final GestureTapCallback? pressOnSeeMore;
 
   @override
@@ -27,7 +32,132 @@ class DonationDescription extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               donasi.namaDonasi,
-              style: Theme.of(context).textTheme.titleLarge,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 12, 30, 12),
+            child: Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 8,
+                  decoration: BoxDecoration(
+                    color: kPrimaryLightColor.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                LayoutBuilder(
+                  builder: (context, constraints) => Container(
+                    width: constraints.maxWidth * (persentase / 100),
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: kPrimaryLightColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 30, 0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.favorite,
+                            color: kPrimaryLightColor,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            "2387",
+                            style: const TextStyle(
+                              color: kPrimaryLightColor,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        "Donasi",
+                        style: TextStyle(
+                          color: kPrimaryLightColor.withOpacity(0.5),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 12),
+                  width: 1,
+                  height: 24,
+                  color: kPrimaryLightColor.withOpacity(0.5),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        jumlahDanaTerkumpul,
+                        style: const TextStyle(
+                          color: kPrimaryLightColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      Text(
+                        "Terkumpul",
+                        style: TextStyle(
+                          color: kPrimaryLightColor.withOpacity(0.5),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 12),
+                  width: 1,
+                  height: 24,
+                  color: kPrimaryLightColor.withOpacity(0.5),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "$durasiDonasi hari",
+                        style: const TextStyle(
+                          color: kPrimaryLightColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        "Tersisa",
+                        style: TextStyle(
+                          color: kPrimaryLightColor.withOpacity(0.5),
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           Align(

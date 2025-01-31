@@ -3,6 +3,7 @@ import 'package:donation_app/models/donasi_model.dart';
 import 'package:donation_app/screens/donation_single/donation_single_screen.dart';
 import 'package:donation_app/screens/home/components/section_title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -16,6 +17,15 @@ class HighlightedDonation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final durasiDonasi = donations[0]
+        .detailDonasi!
+        .tanggalBerakhir
+        .difference(donations[0].detailDonasi!.approvedAt)
+        .inDays;
+    final jumlahDanaTerkumpul =
+        "Rp ${donations[0].terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}";
+    final persentase =
+        (donations[0].terkumpul / donations[0].targetDonasi * 100).toInt();
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(children: [
@@ -29,13 +39,13 @@ class HighlightedDonation extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 12.0),
             child: HighlitedDonationCard(
               thumbnailDonasi: donations[0].thumbnailDonasi,
-              durasiDonasi:
-                  "${donations[0].detailDonasi!.tanggalBerakhir.difference(donations[0].detailDonasi!.approvedAt).inDays} hari",
+              durasiDonasi: "$durasiDonasi hari",
               namaDonasi: donations[0].namaDonasi,
               kategoriDonasi: donations[0].namaKategori,
               penggalangDana: donations[0].namaPenggalang,
-              jumlahDanaTerkumpul:
-                  "Rp ${donations[0].terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
+              jumlahDanaTerkumpul: jumlahDanaTerkumpul,
+              isKomoditas: donations[0].isKomoditas,
+              namaKomoditas: donations[0].detailDonasi!.namaKomoditas ?? '',
               thumbnailKat: () {
                 String thumbnailKat = "assets/images/health.png";
                 switch (donations[0].namaKategori) {
@@ -57,14 +67,16 @@ class HighlightedDonation extends StatelessWidget {
                 }
                 return thumbnailKat;
               }(),
-              persentase:
-                  (donations[0].terkumpul / donations[0].targetDonasi * 100)
-                      .toInt(),
+              persentase: persentase,
               press: () {
                 Navigator.pushNamed(
                   context,
                   DonationSingleScreen.routeName,
-                  arguments: DonationDetailsArguments(donation: donations[0]),
+                  arguments: DonationDetailsArguments(
+                      donation: donations[0],
+                      jumlahDanaTerkumpul: jumlahDanaTerkumpul,
+                      durasiDonasi: durasiDonasi,
+                      persentase: persentase),
                 );
               },
             )),
@@ -85,6 +97,8 @@ class HighlitedDonationCard extends StatelessWidget {
     required this.thumbnailKat,
     required this.press,
     required this.persentase,
+    required this.isKomoditas,
+    required this.namaKomoditas,
   });
 
   final String thumbnailDonasi,
@@ -93,8 +107,10 @@ class HighlitedDonationCard extends StatelessWidget {
       penggalangDana,
       jumlahDanaTerkumpul,
       durasiDonasi,
-      thumbnailKat;
+      thumbnailKat,
+      namaKomoditas;
   final int persentase;
+  final bool isKomoditas;
   final GestureTapCallback press;
 
   @override
@@ -165,8 +181,36 @@ class HighlitedDonationCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
+            if (isKomoditas)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: Colors.white54),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/commodity.png',
+                      width: 16,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Donasi Komoditas ($namaKomoditas)',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            const SizedBox(height: 8),
             Text(
-              namaDonasi,
+              "Beri Harapan Pasien Jantung Berjuang Sembuh!",
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -187,7 +231,7 @@ class HighlitedDonationCard extends StatelessWidget {
                 const Icon(
                   Icons.verified_rounded,
                   color: Colors.white,
-                  size: 20,
+                  size: 16,
                 ),
               ],
             ),

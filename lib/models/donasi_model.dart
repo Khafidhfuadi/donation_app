@@ -11,6 +11,7 @@ class DonasiModel {
   final String namaPenggalang;
   final String thumbnailDonasi;
   final DetailDonasiModel? detailDonasi;
+  final bool isKomoditas;
 
   DonasiModel({
     required this.id,
@@ -23,6 +24,7 @@ class DonasiModel {
     required this.namaPenggalang,
     required this.thumbnailDonasi,
     this.detailDonasi,
+    required this.isKomoditas,
   });
 
   factory DonasiModel.fromJson(Map<String, dynamic> json) {
@@ -48,6 +50,7 @@ class DonasiModel {
       namaPenggalang: user['nama_lengkap'] as String? ?? '',
       thumbnailDonasi: json['thumbnail_donasi'] as String? ?? '',
       detailDonasi: detailDonasi,
+      isKomoditas: json['is_komoditas'] as bool? ?? false,
     );
   }
 
@@ -63,6 +66,7 @@ class DonasiModel {
       'kategori_donasi_id': {'nama_kategori': namaKategori},
       'user_id': {'nama_lengkap': namaPenggalang},
       'detail_donasi': detailDonasi?.toJson(),
+      'is_komoditas': isKomoditas,
     };
   }
 }

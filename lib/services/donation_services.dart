@@ -22,9 +22,9 @@ class DonationServices extends GetxController {
             *,
             detail_donasi (
               id,
-              tipe_donasi,
               cerita_donasi,
               tanggal_berakhir,
+              nama_komoditas,
               created_at,
               updated_at,
               approved_at
@@ -34,6 +34,7 @@ class DonationServices extends GetxController {
             ''').order('updated_at', ascending: false);
 
       final data = response.toList();
+      print('data donasi: $data');
       donations.assignAll(data.map((e) => DonasiModel.fromJson(e)).toList());
     } finally {
       isLoading.value = false;
