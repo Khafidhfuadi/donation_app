@@ -48,7 +48,7 @@ class DonationProductLists extends StatelessWidget {
                       "${data.detailDonasi!.tanggalBerakhir.difference(data.detailDonasi!.approvedAt).inDays} hari",
                   namaDonasi: data.namaDonasi,
                   kategoriDonasi: data.namaKategori,
-                  penggalangDana: data.namaPenggalang,
+                  penggalangDana: data.penggalangDonasi!.namaLengkap,
                   jumlahDanaTerkumpul:
                       "Rp ${data.terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
                   thumbnailKat: thumbnailKat,

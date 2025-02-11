@@ -1,7 +1,7 @@
 import 'package:donation_app/models/user_donation_stats_model.dart';
 import 'package:donation_app/models/user_model.dart';
 import 'package:donation_app/screens/init_screen.dart';
-import 'package:donation_app/screens/sign_in/sign_in_screen.dart';
+import 'package:donation_app/screens/splash/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -64,7 +64,7 @@ class AuthService extends GetxController {
     isLoggedIn.value = false;
     currentUser.value = null;
     userStats.value = null;
-    Get.offAllNamed(SignInScreen.routeName);
+    Get.offAllNamed(SplashScreen.routeName);
   }
 
   Future<void> fetchUserInfo() async {

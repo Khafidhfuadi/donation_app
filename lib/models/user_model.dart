@@ -34,4 +34,19 @@ class UserModel {
       idDesa: json['id_desa'],
     );
   }
+
+  //toJson
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'role_id': roleId,
+      'nama_lengkap': namaLengkap,
+      'nik': nik,
+      'jenis_kelamin': jenisKelamin,
+      'alamat_tinggal': alamatTinggal,
+      'no_hp': noHp,
+      'foto_profil': fotoProfil,
+      'id_desa': idDesa,
+    };
+  }
 }

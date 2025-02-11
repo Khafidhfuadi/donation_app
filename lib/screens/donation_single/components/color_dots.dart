@@ -6,9 +6,9 @@ import '../../../models/Product.dart';
 
 class ColorDots extends StatelessWidget {
   const ColorDots({
-    Key? key,
+    super.key,
     required this.product,
-  }) : super(key: key);
+  });
 
   final Product product;
 
@@ -46,10 +46,10 @@ class ColorDots extends StatelessWidget {
 
 class ColorDot extends StatelessWidget {
   const ColorDot({
-    Key? key,
+    super.key,
     required this.color,
     this.isSelected = false,
-  }) : super(key: key);
+  });
 
   final Color color;
   final bool isSelected;

@@ -21,27 +21,28 @@ class DonationSingleScreen extends StatelessWidget {
     final durasiDonasi = args.durasiDonasi;
     final persentase = args.persentase;
 
+    final ScrollController scrollController = ScrollController();
+
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           // Content
-          CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: DonationImages(donation: donation),
-              ),
-              SliverToBoxAdapter(
-                child: DonationDescription(
+          SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
+              children: [
+                DonationImages(donation: donation),
+                DonationDescription(
                   donasi: donation,
                   jumlahDanaTerkumpul: jumlahDanaTerkumpul,
                   durasiDonasi: durasiDonasi,
                   persentase: persentase,
                   pressOnSeeMore: () {},
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
 
           // AppBar overlay
@@ -49,68 +50,80 @@ class DonationSingleScreen extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: const CircleBorder(),
-                    padding: EdgeInsets.zero,
-                    elevation: 1,
-                    backgroundColor: Colors.white,
-                  ),
-                  child: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.black,
-                    size: 20,
-                  ),
-                ),
-              ),
-              actions: [
-                Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(right: 20),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 4,
+            child: AnimatedBuilder(
+              animation: scrollController,
+              builder: (context, child) {
+                final scrollOffset = scrollController.offset;
+                final appBarColor =
+                    scrollOffset > 50 ? kPrimaryLightColor : Colors.transparent;
+                // final iconColor =
+                //     scrollOffset > 50 ? Colors.black : Colors.white;
+                final double elevationValue = scrollOffset > 50 ? 1 : 0;
+
+                return AppBar(
+                  backgroundColor: appBarColor,
+                  elevation: elevationValue,
+                  leading: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: EdgeInsets.zero,
+                        elevation: 1,
+                        backgroundColor: Colors.white,
                       ),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            donation.namaKategori,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          SvgPicture.asset("assets/icons/Star Icon.svg"),
-                        ],
+                      child: Icon(
+                        Icons.arrow_back_ios_new,
+                        color: Colors.black,
+                        size: 20,
                       ),
                     ),
+                  ),
+                  actions: [
+                    Row(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(right: 20),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                donation.namaKategori,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              SvgPicture.asset("assets/icons/Star Icon.svg"),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],
       ),
       bottomNavigationBar: TopRoundedContainer(
-        color: kPrimaryColor.withOpacity(0.1),
+        color: kPrimaryLightColor,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
             child: ElevatedButton(
               onPressed: () {
                 null;

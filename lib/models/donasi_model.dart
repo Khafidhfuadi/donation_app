@@ -1,4 +1,5 @@
 import 'package:donation_app/models/detail_donasi_model.dart';
+import 'package:donation_app/models/user_model.dart';
 
 class DonasiModel {
   final int id;
@@ -8,9 +9,9 @@ class DonasiModel {
   final double targetDonasi;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final String namaPenggalang;
   final String thumbnailDonasi;
   final DetailDonasiModel? detailDonasi;
+  final UserModel? penggalangDonasi;
   final bool isKomoditas;
 
   DonasiModel({
@@ -21,9 +22,9 @@ class DonasiModel {
     required this.targetDonasi,
     required this.createdAt,
     required this.updatedAt,
-    required this.namaPenggalang,
     required this.thumbnailDonasi,
     this.detailDonasi,
+    required this.penggalangDonasi,
     required this.isKomoditas,
   });
 
@@ -47,9 +48,9 @@ class DonasiModel {
       targetDonasi: (json['target_donasi'] ?? 0.0).toDouble(),
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      namaPenggalang: user['nama_lengkap'] as String? ?? '',
       thumbnailDonasi: json['thumbnail_donasi'] as String? ?? '',
       detailDonasi: detailDonasi,
+      penggalangDonasi: UserModel.fromJson(user),
       isKomoditas: json['is_komoditas'] as bool? ?? false,
     );
   }
@@ -64,8 +65,8 @@ class DonasiModel {
       'updated_at': updatedAt.toIso8601String(),
       'thumbnail_donasi': thumbnailDonasi,
       'kategori_donasi_id': {'nama_kategori': namaKategori},
-      'user_id': {'nama_lengkap': namaPenggalang},
       'detail_donasi': detailDonasi?.toJson(),
+      'user_id': penggalangDonasi?.toJson(),
       'is_komoditas': isKomoditas,
     };
   }

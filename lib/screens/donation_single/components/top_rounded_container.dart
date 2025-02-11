@@ -9,7 +9,7 @@ class TopRoundedContainer extends StatelessWidget {
     super.key,
     required this.color,
     required this.child,
-    this.borderRadius = 40,
+    this.borderRadius = 30,
   });
 
   @override

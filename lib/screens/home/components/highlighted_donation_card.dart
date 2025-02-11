@@ -3,7 +3,6 @@ import 'package:donation_app/models/donasi_model.dart';
 import 'package:donation_app/screens/donation_single/donation_single_screen.dart';
 import 'package:donation_app/screens/home/components/section_title.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -42,7 +41,7 @@ class HighlightedDonation extends StatelessWidget {
               durasiDonasi: "$durasiDonasi hari",
               namaDonasi: donations[0].namaDonasi,
               kategoriDonasi: donations[0].namaKategori,
-              penggalangDana: donations[0].namaPenggalang,
+              penggalangDana: donations[0].penggalangDonasi!.namaLengkap,
               jumlahDanaTerkumpul: jumlahDanaTerkumpul,
               isKomoditas: donations[0].isKomoditas,
               namaKomoditas: donations[0].detailDonasi!.namaKomoditas ?? '',
