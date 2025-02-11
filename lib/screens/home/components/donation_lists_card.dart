@@ -1,5 +1,6 @@
 import 'package:donation_app/constants.dart';
 import 'package:donation_app/models/donasi_model.dart';
+import 'package:donation_app/screens/donation_single/donation_single_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -23,6 +24,14 @@ class DonationProductLists extends StatelessWidget {
             children: donations.map((data) {
               //switch icon thumbnailkat based on data.namaKategori
               String thumbnailKat = "assets/images/health.png";
+              final durasiDonasi = data.detailDonasi!.tanggalBerakhir
+                  .difference(data.detailDonasi!.approvedAt)
+                  .inDays;
+              final jumlahDanaTerkumpul =
+                  "Rp ${data.terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}";
+              final persentase =
+                  (donations[0].terkumpul / donations[0].targetDonasi * 100)
+                      .toInt();
               switch (data.namaKategori) {
                 case "Bencana Alam":
                   thumbnailKat = "assets/images/disaster.png";
@@ -44,19 +53,26 @@ class DonationProductLists extends StatelessWidget {
                 width: (MediaQuery.of(context).size.width - 52) / 2,
                 child: DonationListsCard(
                   thumbnailDonasi: data.thumbnailDonasi,
-                  durasiDonasi:
-                      "${data.detailDonasi!.tanggalBerakhir.difference(data.detailDonasi!.approvedAt).inDays} hari",
+                  durasiDonasi: "$durasiDonasi hari",
                   namaDonasi: data.namaDonasi,
                   kategoriDonasi: data.namaKategori,
                   penggalangDana: data.penggalangDonasi!.namaLengkap,
-                  jumlahDanaTerkumpul:
-                      "Rp ${data.terkumpul.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]}.')}",
+                  jumlahDanaTerkumpul: jumlahDanaTerkumpul,
                   thumbnailKat: thumbnailKat,
                   isKomoditas: data.isKomoditas,
                   namaKomoditas: data.detailDonasi!.namaKomoditas ?? "",
-                  persentase:
-                      (data.terkumpul / data.targetDonasi * 100).toInt(),
-                  press: () {},
+                  persentase: persentase,
+                  press: () {
+                    Navigator.pushNamed(
+                      context,
+                      DonationSingleScreen.routeName,
+                      arguments: DonationDetailsArguments(
+                          donation: data,
+                          jumlahDanaTerkumpul: jumlahDanaTerkumpul,
+                          durasiDonasi: durasiDonasi,
+                          persentase: persentase),
+                    );
+                  },
                 ),
               );
             }).toList(),
@@ -183,7 +199,7 @@ class DonationListsCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'Donasi Komoditas ($namaKomoditas)',
+                      'Donasi Komoditas',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 8,

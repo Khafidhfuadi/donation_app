@@ -197,7 +197,7 @@ class HighlitedDonationCard extends StatelessWidget {
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      'Donasi Komoditas ($namaKomoditas)',
+                      'Donasi Komoditas',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 10,
@@ -209,7 +209,7 @@ class HighlitedDonationCard extends StatelessWidget {
               ),
             const SizedBox(height: 8),
             Text(
-              "Beri Harapan Pasien Jantung Berjuang Sembuh!",
+              namaDonasi,
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -318,8 +318,7 @@ class HighlitedDonationCard extends StatelessWidget {
                   child: IconButton(
                     onPressed: () {
                       Share.share(
-                        'Donasi untuk $namaDonasi di kategori $kategoriDonasi. Dana terkumpul: $jumlahDanaTerkumpul. Durasi donasi: $durasiDonasi.',
-                      );
+                          "$namaDonasi\n\n$jumlahDanaTerkumpul\n\nBerikan donasi Anda di https://example.com/donasi/938");
                     },
                     icon: const Icon(
                       Icons.share_rounded,

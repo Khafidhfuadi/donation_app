@@ -21,6 +21,8 @@ class DonationSingleScreen extends StatelessWidget {
     final durasiDonasi = args.durasiDonasi;
     final persentase = args.persentase;
 
+    print(donation.namaDonasi);
+
     final ScrollController scrollController = ScrollController();
 
     return Scaffold(
